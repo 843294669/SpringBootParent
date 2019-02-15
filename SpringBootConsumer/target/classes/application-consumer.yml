@@ -1,0 +1,78 @@
+#服务端口号
+server:
+  port: 8820
+
+#静态文件是否缓存
+spring: 
+  application: 
+    name: consumer
+  thymeleaf: 
+    cache: false
+  resources: 
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+    #不要为工程中的资源文件建立映射
+    #add-mappings: false
+      
+  #数据库连接(SpringBoot默认，需要自带的jdbc依赖)
+#  datasource: 
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: dbc:mysql://127.0.0.1/test
+#    username: ark
+#    password: root
+
+  #引入druid连接池依赖，可以自动装配
+  datasource: 
+    druid: 
+     driver-class-name: com.mysql.jdbc.Driver
+     url: jdbc:mysql://127.0.0.1/test
+     username: ark
+     password: root
+     max-active: 10
+  
+  #hibernate配置
+  jpa:
+    show-sql: true
+    properties: 
+      hibernatedialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      #自动装配SessionFactory
+      #hibernate: 
+       #current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        
+  #找不到handler，直接抛出异常，用于处理全局异常
+  #mvc: 
+    #throw-exception-if-no-handler-found: true
+    
+#服务注册到eureka地址
+eureka:
+  instance:
+    #客户端每隔n秒向服务端发送数据包
+    lease-renewal-interval-in-seconds: 5
+    #客户端告知服务端：若在n秒内没有向服务器发送信息，则服务端将其从服务列表中删除
+    lease-expiration-duration-in-seconds: 10
+  client: 
+    service-url: 
+      defaultZone: http://eureka-server-1:8800/eureka
+    register-with-eureka: true
+    #是否需要从eureka上获取注册信息
+    fetch-registry: true
+
+#设置feign客户端超时时间(feign就是对ribbon的封装)
+#ribbon: 
+#  ReadTimeout: 50000
+#  ConnectTimeout: 50000
+#设置所有的微服务超时时间
+feign: 
+  client: 
+    config: 
+      #服务名为default标示针对所有服务
+      default: 
+        #建立连接后读取资源时间
+        connectTimeout: 5000
+        #建立连接时间
+        readTimeout: 5000
+  
+#配置日志级别
+logging: 
+  level: 
+   com: 
+     netflix: DEBUG

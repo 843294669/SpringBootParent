@@ -1,0 +1,29 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: redis-server
+  redis:
+    host: 132.232.151.34
+    port: 6379
+    password: 123456
+    timeout: 6000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+    database: 0
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server-1:8800/eureka
+#management: 
+#  endpoints:
+#    web:
+#      exposure: 
+#        include: "*"
+#      cors:
+#        allowed-origins: "*"
+#        allowed-methods: "*" 

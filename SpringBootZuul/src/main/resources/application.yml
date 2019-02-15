@@ -1,0 +1,41 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: zuul-server
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8800/eureka/
+  instance:
+    prefer-ip-address: true
+    
+#是否开启重试功能
+zuul: 
+  #*表示忽略所有未配置的service
+  #ignoredServices: '*'
+  #忽略consumer服务(consumer服务不指定路由将不能访问)
+  #ignoredServices: 'consumer'
+  #开启重试
+  retryable: true
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+  routes:
+    #自定义服务名称
+    redis-session-service: 
+      path: /user-session/**
+      serviceId: redis-server
+      sensitiveHeaders: "*"
+      #add-host-header: true
+    consumer-server: 
+      path: /consumer/**
+      serviceId: consumer
+      sensitiveHeaders: "*"
+ribbon: 
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+  #对当前服务的重试次数
+  MaxAutoRetries: 2
+  #切换相同Server的次数
+  MaxAutoRetriesNextServer: 0

@@ -1,0 +1,14 @@
+spring: 
+  #引入druid连接池依赖，可以自动装配
+  datasource: 
+    druid: 
+     driver-class-name: com.mysql.jdbc.Driver
+     url: jdbc:mysql://127.0.0.1/test
+     username: ark
+     password: root
+     max-active: 10
+  #hibernate配置
+  jpa:
+    show-sql: true
+    properties: 
+      hibernatedialect: org.hibernate.dialect.MySQL5InnoDBDialect

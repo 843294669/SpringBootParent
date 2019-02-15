@@ -1,0 +1,23 @@
+#静态文件是否缓存
+spring:
+  profiles: 
+    #自定义yml后缀名，可以启动多实例
+    active: [eureka-server-1, eureka-datasource]
+  #热部署生效
+  devtools: 
+    restart: 
+      enabled: false
+      #热部署策略
+      trigger-file: trigger-restart.txt
+  #静态文件是否缓存
+  #thymeleaf: 
+    #cache: false
+  resources: 
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+  freemarker: 
+    #注册中心禁止优先加载模板，这样可以监控服务
+    prefer-file-system-access: true
+
+  #找不到handler，直接抛出异常，用于处理全局异常
+#  mvc: 
+#    throw-exception-if-no-handler-found: true
